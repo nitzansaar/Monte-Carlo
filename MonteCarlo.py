@@ -26,8 +26,24 @@ def monte_carlo_approach(n) :
     for i in range(n-5,n+1) :
         win_table[i] = 0
     for i in range(1000000) :
-        ## you do this part. My solution is under 20 lines of code. Yours can be longer, but if it's getting
-        ## really big, take a step back and rethink.
 
     for item in win_table.keys() :
         print("%d: %f" % (item, win_table[item]/1000000))
+
+def approach(limit) :
+    score = 0
+    roll = randint(1, 6)
+    hold = false
+    score += roll
+    while score < limit:
+        roll = randint(1, 6)
+        choice = input("Do you want to hold?(Y/N): ")
+        if choice.lower() == "y":
+            break
+    return score
+
+
+
+
+
+
