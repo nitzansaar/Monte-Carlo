@@ -38,9 +38,10 @@ def approach(limit) :
         print(f"You rolled {roll}")
         score += roll
         print(f"Current score:{score}")
-        choice = input("Do you want to hold?(Y/N): ")
-        if choice.lower() == "y":
-            break
+        if score < limit:
+            choice = input("Do you want to hold?(Y/N): ")
+            if choice.lower() == "y":
+                break
     return score
 
 limit = 10
