@@ -21,28 +21,51 @@ from random import randint
 
 # n is the limit.
 
+# create policy for best value to hold at, 1-4 always roll,
+# make for loops for different hold values and run 1mil times then divide wins by number of games
+# P2 is dealer has no choice
 
-# def monte_carlo_approach(n) :
-#     win_table = {}
-#     for i in range(n-5,n+1) :
-#         win_table[i] = 0
-#     for i in range(1000000) :
-#
-#     for item in win_table.keys() :
-#         print("%d: %f" % (item, win_table[item]/1000000))
+
+
+def monte_carlo_approach(n) :
+    win_table = {}
+    for i in range(n-5,n+1) :
+        win_table[i] = 0
+    for i in range(1000000) :
+
+    for item in win_table.keys() :
+        print("%d: %f" % (item, win_table[item]/1000000))
 
 def approach(limit) :
-    score = 0
-    while score < limit:
+    print(f"The limit is {limit}")
+    scores = [0,0]
+    winner = None
+    while scores[0] < limit:
         roll = randint(1, 6)
         print(f"You rolled {roll}")
-        score += roll
-        print(f"Current score:{score}")
-        if score < limit:
+        scores[0] += roll
+        print(f"Current score:{scores[0]}")
+        if scores[0] < limit:
             choice = input("Do you want to hold?(Y/N): ")
             if choice.lower() == "y":
                 break
-    return score
+        elif scores[0] == limit:
+            winner = 0
+            break
+    if winner is None:
+        roll = randint(1, 6)
+        scores[1] += roll
+        if scores[1] >= limit:
+            if abs(limit - scores[1]) > abs(limit - scores[0]):
+                winner = 0
+            else:
+                winner = 1
+        else:
+            winner = 1
+
+    return winner
+
+
 
 limit = 10
 res = approach(limit)
