@@ -27,20 +27,26 @@ from random import randint
 
 
 
-def monte_carlo_approach(n) :
-    win_table = {}
-    for i in range(n-5,n+1) :
-        win_table[i] = 0
-    for i in range(1000000) :
+# def monte_carlo_approach(n) :
+#     win_table = {}
+#     for i in range(n-5,n+1) :
+#         win_table[i] = 0
+#     for i in range(1000000) :
+#
+#     for item in win_table.keys() :
+#         print("%d: %f" % (item, win_table[item]/1000000))
 
-    for item in win_table.keys() :
-        print("%d: %f" % (item, win_table[item]/1000000))
 
 def approach(limit) :
+    """"
+    Returns 0 if player 1 wins, 1 if player 2 wins
+    P1 automatically wins if they hit the target score
+    """
     print(f"The limit is {limit}")
     scores = [0,0]
     winner = None
-    while scores[0] < limit:
+    exit = False
+    while scores[0] < limit and not exit:
         roll = randint(1, 6)
         print(f"You rolled {roll}")
         scores[0] += roll
@@ -48,20 +54,22 @@ def approach(limit) :
         if scores[0] < limit:
             choice = input("Do you want to hold?(Y/N): ")
             if choice.lower() == "y":
-                break
+                exit = True
         elif scores[0] == limit:
             winner = 0
             break
-    if winner is None:
+
+    while scores[1] < limit:
         roll = randint(1, 6)
         scores[1] += roll
-        if scores[1] >= limit:
-            if abs(limit - scores[1]) > abs(limit - scores[0]):
-                winner = 0
-            else:
-                winner = 1
-        else:
-            winner = 1
+        print(f"Player 2 current score:{scores[1]}")
+
+    if exit and scores[1] > limit:
+        winner = 0
+    elif abs(limit - scores[1]) > abs(limit - scores[0]):
+        winner = 0
+    else:
+        winner = 1
 
     return winner
 
