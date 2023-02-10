@@ -1,3 +1,4 @@
+# Author: Nitzan Saar
 from random import randint
 from collections import defaultdict
 
@@ -30,9 +31,8 @@ from collections import defaultdict
 
 def monte_carlo_approach(n) :
     win_table = defaultdict(int)
-    hold_values = [n-5, n-4, n-3, n-2, n-1, n]
     for i in range(1000000):
-        for hold in hold_values:
+        for hold in range(n-5, n+1):
             winner, hold_value = approach(n, hold)
             if winner == 0:
                 win_table[hold_value] += 1
@@ -41,34 +41,31 @@ def monte_carlo_approach(n) :
 
 
 def approach(limit, hold) :
-    """"
-    Returns 0 if player 1 wins, 1 if player 2 wins
-    P1 automatically wins if they hit the target score
-    If both players exceed the limit, the winner is the player closest to the target
-    """
     scores = [0,0]
     winner = None
-    exit = False
-    while scores[0] < limit and not exit:
+    stop = False
+    while scores[0] < limit and not stop:
         roll = randint(1, 6)
         scores[0] += roll
-        if scores[0] == hold:
-            break
-        if scores[0] == limit:
-            return 0, hold
-
-    while scores[1] < limit:
-        roll = randint(1, 6)
-        scores[1] += roll
-
-    if exit and scores[1] > limit:
-        winner = 0
-    elif abs(limit - scores[1]) > abs(limit - scores[0]):
-        winner = 0
-    else:
+        if hold <= scores[0] < limit:
+            stop = True
+    if scores[0] > limit:
         winner = 1
+        return winner, hold
+    elif scores[0] == limit:
+        winner = 0
+        return winner, hold
+    else:
+        while scores[1] < limit:
+            roll = randint(1, 6)
+            scores[1] += roll
+            if limit > scores[1] > scores[0]:
+                winner = 1
+                return winner, hold
 
-    return winner,hold
+    if stop and scores[1] > limit:
+        winner = 0
+    return winner, hold
 
 
 

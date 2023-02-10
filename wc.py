@@ -1,10 +1,12 @@
 import sys
+import argparse
+import pickle
 from string import punctuation
 
+#only implement load and save , load and save take over --pfile
 def wordfreq(fname, stripPunc, toLower) :
     wordDict = {}
     with open(fname) as f:
-        ## let's just get all the words at once.
         words = f.read().split()
         for word in words :
             if stripPunc :
@@ -18,20 +20,12 @@ def wordfreq(fname, stripPunc, toLower) :
     return wordDict
 
 if __name__== '__main__':
-    if len(sys.argv) < 2:
-        print("Usage: wordfreq {--strip --convert -pfile=outfile} file")
-        sys.exit(-1)
-        fname = sys.argv[-1]
-        strip = '--strip' in sys.argv
-        convert = '--convert' in sys.argv
-        wd = wordfreq(fname, stripPunc=strip, toLower=convert)
-        pickled = False
-        for arg in sys.argv:
-            if arg.startswith('--pfile'):
-                ofile = arg.split('=')[1]
-                pickle.dump(wd, open(ofile, 'w'))
-                pickled = True
-        if not pickled:
-            print(wd)
+    parser = argparse.ArgumentParser('Calculate word frequency distribution')
+    parser.add_argument('file')
+    parser.add_argument('-p', '--strip')
+    parser.add_argument('-c', '--convert')
+    parser.add_argument('-s', '--sort')
+
+    args = parser.parse_args()
 
 
