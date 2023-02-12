@@ -55,7 +55,7 @@ if __name__ == '__main__':
         with open(save, 'wb') as f:
             pickle.dump(wd, f)
     if sort:
-        sorted_wd = sorted(wd.items(), key=lambda x: x[1], reverse=True)
+        sorted_wd = sorted(wd.items(), key=lambda x: x[1])
         for word, freq in sorted_wd:
             print(f"{word}: {freq}")
     else:

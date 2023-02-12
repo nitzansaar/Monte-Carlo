@@ -29,15 +29,15 @@ from collections import defaultdict
 
 
 
-def monte_carlo_approach(n) :
+def monte_carlo_approach(n, simulations) :
     win_table = defaultdict(int)
-    for i in range(1000000):
+    for i in range(simulations):
         for hold in range(n-5, n+1):
             winner, hold_value = approach(n, hold)
             if winner == 0:
                 win_table[hold_value] += 1
     for item in sorted(win_table.keys()) :
-        print("%d: %f" % (item, win_table[item]/1000000))
+        print("%d: %f" % (item, win_table[item]/simulations))
 
 
 def approach(limit, hold) :
@@ -70,7 +70,8 @@ def approach(limit, hold) :
 
 
 limit = 10
-monte_carlo_approach(limit)
+simulations = 1000000
+monte_carlo_approach(limit, simulations)
 
 
 
