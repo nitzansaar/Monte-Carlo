@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     if load:
         with open(load, 'rb') as f:
-            wb = pickle.load(f)
+            wd = pickle.load(f)
     else:
         if os.path.isfile(file_or_directory):
             wd = wordfreq(file_or_directory, strip, convert)
