@@ -56,8 +56,7 @@ if __name__ == '__main__':
         with open(save, 'wb') as f:
             pickle.dump(wd, f)
     if sort:
-        sorted_wd = sorted(wd.items(), key=lambda x: x[1])
-        print(sorted_wd)
+        print(sorted(wd.items(), key=lambda x: x[1]))
     else:
         print(wd)
 
