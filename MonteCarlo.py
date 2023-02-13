@@ -33,9 +33,9 @@ def monte_carlo_approach(n, simulations) :
     win_table = defaultdict(int)
     for i in range(simulations):
         for hold in range(n-5, n+1):
-            winner, hold_value = approach(n, hold)
+            winner = approach(n, hold)
             if winner == 0:
-                win_table[hold_value] += 1
+                win_table[hold] += 1
     for item in sorted(win_table.keys()) :
         print("%d: %f" % (item, win_table[item]/simulations))
 
@@ -51,27 +51,27 @@ def approach(limit, hold) :
             stop = True
     if scores[0] > limit:
         winner = 1
-        return winner, hold
+        return winner
     elif scores[0] == limit:
         winner = 0
-        return winner, hold
+        return winner
     else:
         while scores[1] < limit:
             roll = randint(1, 6)
             scores[1] += roll
             if limit > scores[1] > scores[0]:
                 winner = 1
-                return winner, hold
+                return winner
 
     if stop and scores[1] > limit:
         winner = 0
-    return winner, hold
+    return winner
 
 
 
-limit = 10
+n = 10
 simulations = 1000000
-monte_carlo_approach(limit, simulations)
+monte_carlo_approach(n, simulations)
 
 
 
